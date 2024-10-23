@@ -2,14 +2,14 @@ package com.example.cars.controller;
 
 import com.example.cars.model.Car;
 import com.example.cars.service.CarService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/cars")
 public class CarController {
 
     private final CarService carService;
@@ -18,10 +18,10 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping("/")
+    @GetMapping({"/", ""})
     public String list(Model model) {
         model.addAttribute("cars", carService.getAllCars());
-        return "list";
+        return "car_list";
     }
 
     @GetMapping("/detail/{index}")
@@ -31,7 +31,7 @@ public class CarController {
         }
 
         model.addAttribute("car", carService.getAllCars().get(index));
-        return "detail";
+        return "car_detail";
     }
 
     @GetMapping("/delete/{index}")
@@ -48,7 +48,7 @@ public class CarController {
     public String add(Model model) {
         model.addAttribute("car", new Car());
         model.addAttribute("edit", false);
-        return "edit";
+        return "car_edit";
     }
 
     @GetMapping("/edit/{index}")
@@ -60,11 +60,16 @@ public class CarController {
         car.setId(index);
         model.addAttribute("car", car);
         model.addAttribute("edit", true);
-        return "edit";
+        return "car_edit";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Car car) {
+    public String save(@Valid Car car, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("edit", car.getId() > -1);
+            return "car_edit";
+        }
+
         if (car.getLicensePlate() == null || car.getLicensePlate().isEmpty()) {
             return "redirect:/";
         }

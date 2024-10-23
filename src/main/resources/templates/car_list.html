@@ -5,7 +5,7 @@
    <title>Cars</title>
 </head>
 <body>
-<a th:href="@{'/create'}">Add new car</a>
+<a th:href="@{'/cars/create'}">Add new car</a>
 <ul>
    <li th:each="car, iter: ${cars}">
       <a th:href="@{'/detail/' + ${iter.index}}">

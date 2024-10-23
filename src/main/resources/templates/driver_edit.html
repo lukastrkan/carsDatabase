@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title th:text="${edit ? 'Edit car' : 'Create car'}"></title>
+</head>
+<body>
+<form action="/drivers/save" method="post" th:object="${driver}">
+   <input type="hidden" th:field="*{id}"/>
+<!--   <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>-->
+   <span th:erorrs="*{name}">Name error</span>
+   <label for="name">Name</label>
+   <input type="text" id="name" th:field="*{name}"/>
+   <br>
+   <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</span>
+   <label for="age">Age</label>
+   <input type="text" id="age" th:field="*{age}"/>
+   <br>
+   <span th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary error</span>
+   <label for="salary">Salary</label>
+   <input type="number" id="salary" th:field="*{salary}"/>
+   <br>
+   <button type="submit">Save</button>
+</form>
+</body>
+</html>

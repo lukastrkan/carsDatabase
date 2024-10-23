@@ -5,17 +5,21 @@
    <title th:text="${edit ? 'Edit car' : 'Create car'}"></title>
 </head>
 <body>
-<form action="/save" method="post" th:object="${car}">
+<form action="/cars/save" method="post" th:object="${car}">
    <input type="hidden" th:field="*{id}"/>
+   <span th:if="${#fields.hasErrors('licensePlate')}" th:errors="*{licensePlate}">License plate error</span>
    <label for="licensePlate">License plate</label>
    <input type="text" id="licensePlate" th:field="*{licensePlate}"/>
    <br>
+   <span th:if="${#fields.hasErrors('color')}" th:errors="*{color}">Color error</span>
    <label for="color">Color</label>
    <input type="text" id="color" th:field="*{color}"/>
    <br>
+   <span th:if="${#fields.hasErrors('tankVolume')}" th:errors="*{tankVolume}">tankVolume error</span>
    <label for="tankVolume">Tank volume</label>
    <input type="number" id="tankVolume" th:field="*{tankVolume}"/>
    <br>
+   <span th:if="${#fields.hasErrors('numberOfSeats')}" th:errors="*{numberOfSeats}">numberOfSeats error</span>
    <label for="numberOfSeats">Number of seats</label>
    <input type="number" id="numberOfSeats" th:field="*{numberOfSeats}"/>
    <br>
