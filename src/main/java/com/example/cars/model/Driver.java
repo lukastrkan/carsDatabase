@@ -1,11 +1,19 @@
 package com.example.cars.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
+@Entity
+@Table(name = "drivers")
 public class Driver {
-    private int id = -1;
+    @Id
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    private long id;
     @NotBlank
     private String name;
     @Min(1)
@@ -13,11 +21,11 @@ public class Driver {
     @Min(20000)
     private int salary;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

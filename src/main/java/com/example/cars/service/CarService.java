@@ -4,14 +4,15 @@ import com.example.cars.model.Car;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public interface CarService {
-    ArrayList<Car> getAllCars();
+    List<Car> getAllCars();
 
-    Car getCarById(int id);
+    Car getCarById(long id);
 
-    void deleteCarById(int id);
+    void deleteCarById(long id);
 
     void saveCar(Car car);
 }

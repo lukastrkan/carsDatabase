@@ -6,8 +6,8 @@
 </head>
 <body>
 <a th:href="@{'/'}">Back to list</a>
-<a th:href="@{'/edit/' + ${index}}">Edit</a>
-<a th:href="@{'/delete/' + ${index}}">Delete</a>
+<a th:href="@{'/edit/' + ${car.id}}">Edit</a>
+<a th:href="@{'/delete/' + ${car.id}}">Delete</a>
 <br>
 <b th:text="${car.licensePlate}">Licence plate</b>
 <b th:text="${car.color}">Color</b>
