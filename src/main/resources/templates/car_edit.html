@@ -23,6 +23,10 @@
    <label for="numberOfSeats">Number of seats</label>
    <input type="number" id="numberOfSeats" th:field="*{numberOfSeats}"/>
    <br>
+   Driver:
+   <select th:field="*{driver}">
+      <option th:each="driver : ${drivers}" th:text="${driver.name}" th:value="${driver.id}"></option>
+   </select>
    <button type="submit">Save</button>
 </body>
 </html>

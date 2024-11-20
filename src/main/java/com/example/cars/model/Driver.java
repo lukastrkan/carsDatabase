@@ -1,12 +1,11 @@
 package com.example.cars.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+
+import java.util.List;
 
 @Entity
 @Table(name = "drivers")
@@ -20,6 +19,11 @@ public class Driver {
     private int age;
     @Min(20000)
     private int salary;
+    //@ManyToMany
+    //@JoinTable(name = "driver_car", joinColumns = @JoinColumn(name = "driver_id"),
+    //inverseJoinColumns = @JoinColumn(name = "car_id"))
+    @OneToMany(mappedBy = "driver")
+    private List<Car> cars;
 
     public long getId() {
         return id;
@@ -52,4 +56,6 @@ public class Driver {
     public void setSalary(int salary) {
         this.salary = salary;
     }
+
+    public List<Car> getCars() {return cars;}
 }

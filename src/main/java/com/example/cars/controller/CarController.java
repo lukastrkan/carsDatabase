@@ -2,6 +2,7 @@ package com.example.cars.controller;
 
 import com.example.cars.model.Car;
 import com.example.cars.service.CarService;
+import com.example.cars.service.DriverService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class CarController {
 
     private final CarService carService;
+    private final DriverService driverService;
 
-    public CarController(CarService carService) {
+    public CarController(CarService carService, DriverService driverService) {
         this.carService = carService;
+        this.driverService = driverService;
     }
 
     @GetMapping({"/", ""})
@@ -26,7 +29,7 @@ public class CarController {
 
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable long id) {
-        if (id < 0 || id >= carService.getAllCars().size()) {
+        if (id < 0 || carService.getAllCars().isEmpty()) {
             return "redirect:/";
         }
 
@@ -48,6 +51,7 @@ public class CarController {
     public String add(Model model) {
         model.addAttribute("car", new Car());
         model.addAttribute("edit", false);
+        model.addAttribute("drivers", driverService.getAllDrivers());
         return "car_edit";
     }
 
@@ -59,11 +63,13 @@ public class CarController {
         var car = carService.getCarById(id);
         model.addAttribute("car", car);
         model.addAttribute("edit", true);
+        model.addAttribute("drivers", driverService.getAllDrivers());
         return "car_edit";
     }
 
     @PostMapping("/save")
     public String save(@Valid Car car, BindingResult bindingResult, Model model) {
+        model.addAttribute("drivers", driverService.getAllDrivers());
         if (bindingResult.hasErrors()) {
             model.addAttribute("edit", car.getId() > -1);
             return "car_edit";

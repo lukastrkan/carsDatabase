@@ -26,7 +26,7 @@ public class DriverController {
 
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable long id) {
-        if (id < 0 || id >= driverService.getAllDrivers().size()) {
+        if (id < 0 || driverService.getAllDrivers().isEmpty()) {
             return "redirect:/";
         }
 
